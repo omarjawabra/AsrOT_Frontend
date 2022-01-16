@@ -16,7 +16,7 @@
        headers: myHeaders,
        redirect: 'follow'
      };  
-     response = await fetch("http://i13hpc29.ira.uka.de:4443/v1/gettasks/", requestOptions);
+     response = await fetch("https://i13hpc29.ira.uka.de:443/v1/gettasks/", requestOptions);
      
      if(response.status==200)
          return response.json()
