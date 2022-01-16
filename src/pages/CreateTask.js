@@ -33,10 +33,16 @@ function CreateTask() {
   const [selectedOption, setSelectedOption] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const [fileName,setFileName] = useState('Select a file')
 
   const onBrowseClick = () => {
     // `current` points to the mounted file input element
     inputFile.current.click();
+  };
+  const onSelectFile = () => {
+    if (inputFile.current.files.length > 0) {
+      setFileName(inputFile.current.files[0].name)
+    }
   };
 
   const inputFile = useRef(null);
@@ -118,12 +124,13 @@ function CreateTask() {
                 id="file"
                 ref={inputFile}
                 style={{ display: "none" }}
+                onChange={onSelectFile}
               />
               <button
                 onClick={onBrowseClick}
                 style={{ alignSelf: "flex-start" }}
               >
-                Select a file
+                {fileName}
               </button>
             </div>
             <div style={{ height: 25 }}></div>
@@ -147,6 +154,7 @@ function CreateTask() {
             >
               Create The Task
             </button>
+            <div style={{height:10}}></div>
             <ClipLoader color={"#ffffff"} loading={loading} size={40} />
           </div>
           <div style={{ height: 10 }}></div>
