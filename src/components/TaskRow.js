@@ -1,5 +1,5 @@
 import toast, { Toaster } from "react-hot-toast";
-import { AiOutlineCheckCircle } from "react-icons/ai";
+import { AiOutlineCheckCircle,AiOutlineCloseCircle } from "react-icons/ai";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import React, { useState } from "react";
 function TaskRow(props) {
@@ -29,33 +29,32 @@ function TaskRow(props) {
     let status = task.status.status
     if (status == "done") {
       return (
-        <p
+        <AiOutlineCheckCircle
           style={{
             flex: 1,
-            fontSize: 15,
-            fontSize: 15,
+            fontSize: 25,
             color: "green",
             fontWeight: "bold",
             alignSelf: "center",
           }}
         >
-          {status}
-        </p>
+          
+        </AiOutlineCheckCircle>
       );
     } else {
       if (status == "failed")
         return (
-          <p
-            style={{
-              flex: 1,
-              fontSize: 15,
-              alignSelf: "center",
-              color: "red",
-              fontWeight: "bold",
-            }}
-          >
-            {status}
-          </p>
+          <AiOutlineCloseCircle
+          style={{
+            flex: 1,
+            fontSize: 25,
+            color: "red",
+            fontWeight: "bold",
+            alignSelf: "center",
+          }}
+        >
+          
+        </AiOutlineCloseCircle>
         );
       else
       {
