@@ -15,7 +15,7 @@ export default function LogoutButton()
             onClick={logout}
             style={{
               position: "absolute",
-              top: "4%",
+              top: "10%",
               right: "2%",
               zIndex: 10,
               padding: 10,
