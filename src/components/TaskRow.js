@@ -1,32 +1,51 @@
 import toast, { Toaster } from "react-hot-toast";
-import { AiOutlineCheckCircle,AiOutlineCloseCircle } from "react-icons/ai";
+import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import React, { useState } from "react";
+import getTextFile from "../api/GetTextFile";
+import { getEmail, getToken } from "../user/User";
 function TaskRow(props) {
-
   const [progressValue, setProgressValue] = useState(0);
+
   const copyTaskId = () => {
     navigator.clipboard.writeText(props.task.task_id);
     toast.success("Task id copied to clipboard", { position: "bottom-center" });
   };
 
+  const dounloadTextFile = async () => {
+    //navigator.clipboard.writeText(props.task.task_id);
+    // toast.success("Task id copied to clipboard", { position: "bottom-center" });
+    let token = getToken();
+    let text = await getTextFile(token, props.task.task_id);
+    if (text) {
+      const element = document.createElement("a");
+      const file = new Blob([text], { type: "text/plain" });
+      element.href = URL.createObjectURL(file);
+      element.download = props.task.task_id+".txt";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+      toast.success("Text downloaded successfully", {
+        position: "bottom-center",
+      });
+    } else {
+      toast.error("Text could not be downloaded", {
+        position: "bottom-center",
+      });
+    }
+  };
 
-  const calculateProgress=(startingTime,size)=>
-  {
-    
-    const st = Date.parse(startingTime);  
-   let et = (size/1040512)*40;
-   let now = new Date()
-   let timePassed = (now-st)/1000; 
-    let progress = parseInt((timePassed/et)*100);
-    if(progress>99)
-      progress=99;
-    setProgressValue(progress)
-
-  }
+  const calculateProgress = (startingTime, size) => {
+    const st = Date.parse(startingTime);
+    let et = (size / 1040512) * 40;
+    let now = new Date();
+    let timePassed = (now - st) / 1000;
+    let progress = parseInt((timePassed / et) * 100) * 2;
+    if (progress > 99) progress = 99;
+    setProgressValue(progress);
+  };
 
   const Status = (task) => {
-    let status = task.status.status
+    let status = task.status.status;
     if (status == "done") {
       return (
         <AiOutlineCheckCircle
@@ -37,30 +56,25 @@ function TaskRow(props) {
             fontWeight: "bold",
             alignSelf: "center",
           }}
-        >
-          
-        </AiOutlineCheckCircle>
+        ></AiOutlineCheckCircle>
       );
     } else {
       if (status == "failed")
         return (
           <AiOutlineCloseCircle
-          style={{
-            flex: 1,
-            fontSize: 25,
-            color: "red",
-            fontWeight: "bold",
-            alignSelf: "center",
-          }}
-        >
-          
-        </AiOutlineCloseCircle>
+            style={{
+              flex: 1,
+              fontSize: 25,
+              color: "red",
+              fontWeight: "bold",
+              alignSelf: "center",
+            }}
+          ></AiOutlineCloseCircle>
         );
-      else
-      {
-        calculateProgress(task.status.date_time,task.status.file_size)
+      else {
+        calculateProgress(task.status.date_time, task.status.file_size);
         return (
-          <div style={{flex:1}}>
+          <div style={{ flex: 1 }}>
             <p
               style={{
                 flex: 1,
@@ -72,9 +86,30 @@ function TaskRow(props) {
             >
               {status}
             </p>
-            <div style={{ flexDirection: "row", display: "flex",alignSelf:'center',alignItems:'center',justifyContent:'center'}}>
-              <progress max="100" value={progressValue} style={{ width: 50 ,margin:0,padding:0}}></progress>
-              <p style={{ fontSize: 10, alignSelf: "center",margin:0,padding:0}}>{progressValue}%</p>
+            <div
+              style={{
+                flexDirection: "row",
+                display: "flex",
+                alignSelf: "center",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <progress
+                max="100"
+                value={progressValue}
+                style={{ width: 50, margin: 0, padding: 0 }}
+              ></progress>
+              <p
+                style={{
+                  fontSize: 10,
+                  alignSelf: "center",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {progressValue}%
+              </p>
             </div>
           </div>
         );
@@ -97,20 +132,39 @@ function TaskRow(props) {
       <p style={{ flex: 1, fontSize: 15, alignSelf: "center" }}>
         {props.task.task_name}
       </p>
-      
 
-      <p style={{ flex: 1, fontSize: 15, alignSelf: "center" ,padding:0,margin:0}}>
+      <p
+        style={{
+          flex: 1,
+          fontSize: 15,
+          alignSelf: "center",
+          padding: 0,
+          margin: 0,
+        }}
+      >
         {new Date(props.task.date_time).toLocaleString()}
       </p>
-      
-      <Status status={props.task}></Status>
 
-      <button
-        onClick={copyTaskId}
-        style={{ flex: 1, fontSize: 15, alignSelf: "center" }}
-      >
-        copy task id
-      </button>
+      <Status status={props.task}></Status>
+      {props.task.status == "done"?
+      <div style={{ display: "flex", flex: 1, flexDirection: "row" }}>
+         <button
+          onClick={copyTaskId}
+          style={{ width: 120, fontSize: 15, alignSelf: "center" }}
+        >
+          copy task id
+        </button>
+        <div style={{ width: 5 }}></div>
+        <button
+          onClick={dounloadTextFile}
+          style={{ fontSize: 15, alignSelf: "center" }}
+        >
+          text file
+        </button>
+      </div>
+      :
+      <div style={{ display: "flex", flex: 1, flexDirection: "row" }}></div>
+      }
       <Toaster></Toaster>
     </div>
   );
