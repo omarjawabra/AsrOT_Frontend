@@ -9,15 +9,15 @@ export default function Username()
     let email = getEmail();
 
     return(
-        <button
+        <div
             style={{
               position: "absolute",
-              top: "4%",
+              top: "3%",
               left: "2%",
               zIndex: 10,
               padding: 10,
               borderRadius: 10,
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
               color: "white",
               border: "none",
               fontSize: "0.75em",
@@ -25,6 +25,6 @@ export default function Username()
             }}
           >
             Logged in as: {email}
-          </button>
+          </div>
     );
 }
