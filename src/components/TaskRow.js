@@ -74,7 +74,8 @@ function TaskRow(props) {
       else {
         calculateProgress(task.status.date_time, task.status.file_size);
         return (
-          <div style={{ flex: 1 }}>
+          <div style={{ flex: 2 ,flexDirection: "row",
+          display: "flex"}}>
             <p
               style={{
                 flex: 1,
@@ -88,6 +89,7 @@ function TaskRow(props) {
             </p>
             <div
               style={{
+                flex: 1,
                 flexDirection: "row",
                 display: "flex",
                 alignSelf: "center",
@@ -98,11 +100,12 @@ function TaskRow(props) {
               <progress
                 max="100"
                 value={progressValue}
-                style={{ width: 50, margin: 0, padding: 0 }}
+                style={{ width: 75, margin: 0, padding: 0 }}
               ></progress>
+              <div style={{width:2}}></div>
               <p
                 style={{
-                  fontSize: 10,
+                  fontSize: 12,
                   alignSelf: "center",
                   margin: 0,
                   padding: 0,
@@ -159,11 +162,11 @@ function TaskRow(props) {
           onClick={dounloadTextFile}
           style={{ fontSize: 15, alignSelf: "center" }}
         >
-          text file
+          download
         </button>
       </div>
       :
-      <div style={{ display: "flex", flex: 1, flexDirection: "row" }}></div>
+       props.task.status == "failed"?<div style={{ display: "flex", flex: 1.1, flexDirection: "row" }}></div>:<div></div>
       }
       <Toaster></Toaster>
     </div>
