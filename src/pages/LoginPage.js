@@ -5,6 +5,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Link, useHistory } from "react-router-dom";
 import { auth } from "../user/User";
 import toast, { Toaster } from 'react-hot-toast';
+import AdminMail from "../components/AdminMail";
 
 function LoginPage() {
   const history = useHistory();
@@ -28,6 +29,7 @@ function LoginPage() {
   return (
     <div className="App">
       <header className="App-header">
+        <AdminMail></AdminMail>
         <h1 style={{ color: "#ffffff", fontSize: 75 }}>
           Automatic Transcriber
         </h1>

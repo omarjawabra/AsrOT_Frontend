@@ -6,6 +6,7 @@ import { useHistory, Redirect } from "react-router-dom";
 import { getToken, isAuth, unAuth } from "../user/User";
 import getTaskList from "../api/GetTaskList";
 import LogoutButton from "../components/LogoutButton";
+import AdminMail from "../components/AdminMail";
 
 
 const options = ["one", "two", "three"];
@@ -66,7 +67,7 @@ function TasksList() {
       <div className="App">
         <header className="App-header">
           <LogoutButton></LogoutButton>
-
+          <AdminMail></AdminMail>
           <Username></Username>
           
 

@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import register from "../api/Register";
 import pdf from "../files/agreement.pdf";
 import toast, { Toaster } from "react-hot-toast";
+import AdminMail from "../components/AdminMail";
 function RegisterPage() {
   const history = useHistory();
 
@@ -53,6 +54,7 @@ function RegisterPage() {
   return (
     <div className="App">
       <header className="App-header">
+        <AdminMail></AdminMail>
         <h1 style={{ color: "#ffffff", fontSize: 75 }}>
           Automatic Transcriber
         </h1>

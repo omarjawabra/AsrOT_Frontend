@@ -8,6 +8,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import toast, { Toaster } from 'react-hot-toast';
 import Username from "../components/Username";
 import LogoutButton from "../components/LogoutButton";
+import BackButton from "../components/BackButton";
+import getUserInfo from "../api/GetUserInfo";
+import AdminMail from "../components/AdminMail";
 
 const options = [
   { value: "de", label: "German" },
@@ -66,10 +69,21 @@ function CreateTask() {
       return;
     }
 
-    setLoading(true);
-    
 
+    setLoading(true);
     let token = getToken();
+    let userInfo = await getUserInfo(token);
+    console.log('userInfo')
+    console.log(userInfo)
+    console.log(inputFile.current.files[0].size)
+    if(userInfo.restricted&&inputFile.current.files[0].size>10485760)
+    {
+      toast.error("You have a restricted account, contact the adminstrator for more Info", { position: "bottom-center" });
+      setLoading(false);
+      return;
+    }
+
+    
     let response = await createTask(token, inputFile, title, selectedOption);
     setLoading(false);
     if(response)
@@ -83,8 +97,9 @@ function CreateTask() {
     return (
       <div className="App">
         <header className="App-header">
+          <AdminMail></AdminMail>
           <LogoutButton></LogoutButton>
-
+          <BackButton></BackButton>
           <Username></Username>
           <h1 style={{ color: "#ffffff", fontSize: 75 }}>
             Automatic Transcriber
