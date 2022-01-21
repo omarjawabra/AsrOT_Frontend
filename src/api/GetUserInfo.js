@@ -18,7 +18,7 @@
        redirect: 'follow'
      };
      
-     response = fetch("https://i13hpc29.ira.uka.de:443/auth/userinfo/", requestOptions)
+     response = await fetch("https://i13hpc29.ira.uka.de:443/auth/userinfo/", requestOptions)
      
      if(response.status==200)
          return response.json()
