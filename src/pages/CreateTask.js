@@ -36,7 +36,7 @@ function CreateTask() {
   const [selectedOption, setSelectedOption] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const [fileName,setFileName] = useState('Select a file')
+  //const [fileName,setFileName] = useState('Select a file')
 
   const onBrowseClick = () => {
     // `current` points to the mounted file input element
@@ -44,7 +44,8 @@ function CreateTask() {
   };
   const onSelectFile = () => {
     if (inputFile.current.files.length > 0) {
-      setFileName(inputFile.current.files[0].name)
+      //setFileName(inputFile.current.files[0].name)
+      setTitle(inputFile.current.files[0].name)
     }
   };
 
@@ -56,10 +57,10 @@ function CreateTask() {
   };
 
   const onCreateTheTaskClick = async () => {
-    if (title == "") {
+    /*if (title == "") {
       toast.error("please type a title for the task", { position: "bottom-center" });
       return;
-    }
+    }*/
     if (selectedOption == "") {
       toast.error("please select the language of the audio file", { position: "bottom-center" });
       return;
@@ -112,22 +113,6 @@ function CreateTask() {
               width: "30%",
             }}
           >
-            <input
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
-              style={{
-                backgroundColor: "#224957",
-                width: "100%",
-                height: 30,
-                marginTop: 10,
-                borderRadius: 7,
-                color: "#ffffff",
-                borderWidth: 0,
-              }}
-              placeholder=" Title"
-            ></input>
-            <div style={{ height: 25 }}></div>
             <div
               style={{
                 flexDirection: "row",
@@ -145,9 +130,28 @@ function CreateTask() {
                 onClick={onBrowseClick}
                 style={{ alignSelf: "flex-start" }}
               >
-                {fileName}
+                {'Select a File'}
               </button>
             </div>
+            <div style={{ height: 25 }}></div>
+            
+            <input
+              onChange={(e) => {
+                //setTitle(e.target.value);
+              }}
+              style={{
+                backgroundColor: "#224957",
+                width: "100%",
+                height: 30,
+                marginTop: 10,
+                borderRadius: 7,
+                color: "#ffffff",
+                borderWidth: 0,
+              }}
+              value={title}
+              placeholder={'File Name'}
+              readOnly={true}
+            ></input>
             <div style={{ height: 25 }}></div>
             <Select
               styles={customStyles}
@@ -167,7 +171,7 @@ function CreateTask() {
                 color: "white",
               }}
             >
-              Create The Task
+              Submit Task
             </button>
             <div style={{height:10}}></div>
             <ClipLoader color={"#ffffff"} loading={loading} size={40} />
