@@ -105,7 +105,7 @@ function TasksList() {
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
               Your Tasks
             </p>
-            {tasks.map((e) => {
+            {tasks.slice(0).reverse().map((e) => {
               return <TaskRow task={e}></TaskRow>;
             })}
           </div>
