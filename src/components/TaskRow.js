@@ -3,7 +3,11 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import React, { useState } from "react";
 import getTextFile from "../api/GetTextFile";
-import { getEmail, getToken } from "../user/User";
+import { getToken } from "../user/User";
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import getVttFile from "../api/GetVttFile";
 function TaskRow(props) {
   const [progressValue, setProgressValue] = useState(0);
 
@@ -12,7 +16,7 @@ function TaskRow(props) {
     toast.success("Task id copied to clipboard", { position: "bottom-center" });
   };
 
-  const dounloadTextFile = async () => {
+  const downloadTextFile = async () => {
     //navigator.clipboard.writeText(props.task.task_id);
     // toast.success("Task id copied to clipboard", { position: "bottom-center" });
     let token = getToken();
@@ -33,6 +37,29 @@ function TaskRow(props) {
       });
     }
   };
+
+  const downloadVTTFile = async () => {
+    //navigator.clipboard.writeText(props.task.task_id);
+    // toast.success("Task id copied to clipboard", { position: "bottom-center" });
+    let token = getToken();
+    let text = await getVttFile(token, props.task.task_id);
+    if (text) {
+      const element = document.createElement("a");
+      const file = new Blob([text], { type: "text/plain" });
+      element.href = URL.createObjectURL(file);
+      element.download = props.task.task_id+".vtt";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+      toast.success("Vtt downloaded successfully", {
+        position: "bottom-center",
+      });
+    } else {
+      toast.error("Text could not be downloaded", {
+        position: "bottom-center",
+      });
+    }
+  };
+  
 
   const calculateProgress = (startingTime, size) => {
     const st = Date.parse(startingTime);
@@ -151,6 +178,9 @@ function TaskRow(props) {
       <Status status={props.task}></Status>
       {props.task.status == "done"?
       <div style={{ display: "flex", flex: 1, flexDirection: "row" }}>
+         <PopupState variant="popover" popupId="demo-popup-menu">
+      {(popupState) => (
+        <React.Fragment>
          <button
           onClick={copyTaskId}
           style={{ width: 120, fontSize: 15, alignSelf: "center" }}
@@ -158,12 +188,21 @@ function TaskRow(props) {
           copy task id
         </button>
         <div style={{ width: 5 }}></div>
+        <div>
+        </div>
         <button
-          onClick={dounloadTextFile}
           style={{ fontSize: 15, alignSelf: "center" }}
+          {...bindTrigger(popupState)}
         >
           download
         </button>
+        <Menu {...bindMenu(popupState)}>
+        <MenuItem onClick={downloadVTTFile}>VTT File</MenuItem>
+        <MenuItem onClick={downloadTextFile}>Text File</MenuItem>
+      </Menu>
+      </React.Fragment>
+      )}
+    </PopupState>
       </div>
       :
        props.task.status == "failed"?<div style={{ display: "flex", flex: 1.1, flexDirection: "row" }}></div>:<div></div>
