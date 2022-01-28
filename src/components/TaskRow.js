@@ -11,9 +11,15 @@ import getVttFile from "../api/GetVttFile";
 function TaskRow(props) {
   const [progressValue, setProgressValue] = useState(0);
 
-  const copyTaskId = () => {
-    navigator.clipboard.writeText(props.task.task_id);
-    toast.success("Task id copied to clipboard", { position: "bottom-center" });
+  const correctTaskId = () => {
+    
+    let token = getToken();
+    const win = window.open('https://correction.dataforlearningmachines.com/router?token='+token+'&task_id='+props.task.task_id, '_blank');
+    if (win != null) {
+      win.focus();
+    }
+    //navigator.clipboard.writeText(props.task.task_id);
+    //toast.success("Task id copied to clipboard", { position: "bottom-center" });
   };
 
   const downloadTextFile = async () => {
@@ -54,7 +60,7 @@ function TaskRow(props) {
         position: "bottom-center",
       });
     } else {
-      toast.error("Text could not be downloaded", {
+      toast.error("Vtt could not be downloaded", {
         position: "bottom-center",
       });
     }
@@ -182,10 +188,10 @@ function TaskRow(props) {
       {(popupState) => (
         <React.Fragment>
          <button
-          onClick={copyTaskId}
+          onClick={correctTaskId}
           style={{ width: 120, fontSize: 15, alignSelf: "center" }}
         >
-          copy task id
+          correct
         </button>
         <div style={{ width: 5 }}></div>
         <div>
