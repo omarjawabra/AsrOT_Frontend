@@ -165,9 +165,10 @@ function RegisterPage() {
             borderRadius: 10,
             width: "30%",
             padding: 20,
+            paddingBottom:29
           }}
         >
-          <Link to="login" style={{ color: "#ffffff", fontSize: 10 }}>
+          <Link to="login" style={{ color: "#ffffff", fontSize: 12 }}>
             already have an account? login now!
           </Link>
         </div>
