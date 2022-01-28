@@ -26,7 +26,6 @@ function TasksList() {
   };
 
   const createTask = () => {
-    console.log(intervalId)
     clearInterval(intervalId);
     intervalId=null;
     if (isAuth()) {

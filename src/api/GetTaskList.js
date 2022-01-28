@@ -7,7 +7,6 @@
  {
      let response;
      var myHeaders = new Headers();
-     console.log("Token "+token)
      myHeaders.append("Authorization", "Token "+token);
 
      

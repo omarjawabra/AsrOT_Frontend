@@ -10,7 +10,6 @@ export default async function createTask(
     
   var formdata = new FormData();
   formdata.append("audioFile", file.current.files[0]);
-  console.log(file.current.files[0]);
   formdata.append("taskName", taskName);
   formdata.append("sourceLanguage", sourceLanguage);
 
@@ -25,8 +24,6 @@ export default async function createTask(
     "https://i13hpc29.ira.uka.de:443/v1/createtask/",
     requestOptions
   );
-
-  console.log(response);
 
   if (response.status == 200) return response.json();
   return false;

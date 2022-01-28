@@ -74,9 +74,6 @@ function CreateTask() {
     setLoading(true);
     let token = getToken();
     let userInfo = await getUserInfo(token);
-    console.log('userInfo')
-    console.log(userInfo)
-    console.log(inputFile.current.files[0].size)
     if(userInfo.restricted&&inputFile.current.files[0].size>10485760)
     {
       toast.error("You have a restricted account, contact the adminstrator for more Info", { position: "bottom-center" });
