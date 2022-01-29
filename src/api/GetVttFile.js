@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {the token of the logged in user} token 
+ * @param {the task_id of the file} id 
+ * @returns the vtt text if succeeded, otherwise false
+ */
+
 export default async function getVttFile(token, id) {
   let response;
   var myHeaders = new Headers();

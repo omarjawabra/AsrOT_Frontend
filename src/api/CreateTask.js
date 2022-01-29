@@ -1,3 +1,12 @@
+/**
+ * 
+ * @param {the token of the logged in user} token 
+ * @param {the audio file to upload} file 
+ * @param {the name of the task to create} taskName 
+ * @param {the language of the audio} sourceLanguage 
+ * @returns the response from the server if succeeded, otherwise returns false
+ */
+
 export default async function createTask(
   token,
   file,
