@@ -1,6 +1,6 @@
 import "../App.css";
 import Select from "react-select";
-import React, { useState, useRef } from "react";
+import React, { useEffect,useState, useRef } from "react";
 import { useHistory, Redirect } from "react-router-dom";
 import { getToken, isAuth, unAuth } from "../user/User";
 import createTask from "../api/CreateTask";
@@ -11,7 +11,8 @@ import LogoutButton from "../components/LogoutButton";
 import BackButton from "../components/BackButton";
 import getUserInfo from "../api/GetUserInfo";
 import AdminMail from "../components/AdminMail";
-
+import TaskRow from "../components/TaskRow";
+import getTaskList from "../api/GetTaskList";
 const options = [
   { value: "de", label: "German" },
   { value: "en", label: "English" },
@@ -32,10 +33,13 @@ const customStyles = {
 };
 
 function CreateTask() {
+  var intervalId;
   const history = useHistory();
   const [selectedOption, setSelectedOption] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [tasks, setTasks] = useState([]);
   //const [fileName,setFileName] = useState('Select a file')
 
   const onBrowseClick = () => {
@@ -50,11 +54,39 @@ function CreateTask() {
   };
 
   const inputFile = useRef(null);
-
-  const logout = () => {
-    unAuth();
-    history.push("login");
+  const getTasks = async () => {
+    let token = getToken();
+    if(!window.location.href.endsWith('create'))
+    {
+      clearInterval(intervalId);
+      intervalId=null;
+      return;
+    }
+    if (token) {
+      let tasks = await getTaskList(token);
+      if (tasks) {
+        tasks = tasks.tasks;
+        setTasks(tasks);
+      }
+    } else {
+      unAuth();
+      clearInterval(intervalId);
+      intervalId=null;
+      history.push("login");
+    }
   };
+
+  useEffect(() => {
+    if (!loading2) {
+      setLoading2(true)
+      if(!intervalId)
+      {
+        intervalId = setInterval(getTasks, 30000);
+        getTasks();
+        setLoading2(false)
+      }
+    }
+  }, []);
 
   const onCreateTheTaskClick = async () => {
     /*if (title == "") {
@@ -88,7 +120,6 @@ function CreateTask() {
       toast.success("Task uploaded successfully", { position: "bottom-center" });
     else
       toast.error("A problem occurred while uploading the task", { position: "bottom-center" });
-    history.goBack()
   };
 
   if (isAuth()) {
@@ -173,17 +204,30 @@ function CreateTask() {
             <div style={{height:10}}></div>
             <ClipLoader color={"#ffffff"} loading={loading} size={40} />
           </div>
+          <div style={{height:50}}></div>
+          <div
+            style={{
+              backgroundColor: "rgba(255,255,255,0.05)",
+              padding: 20,
+              borderRadius: 10,
+              width: "50%",
+            }}
+          >
+            <div style={{ flexDirection: "row", display: "flex" }}>
+             
+            </div>
+
+            <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
+              Your Tasks
+            </p>
+            {tasks.slice(0).reverse().map((e,i) => {
+              if(e.status!='failed'&&e.status!='done')
+                return <TaskRow key={i} task={e}></TaskRow>;
+            })}
+          </div>
           <div style={{ height: 10 }}></div>
 
-          <img
-            src={require("../images/background.png")}
-            style={{
-              bottom: "0%",
-              backgroundColor: "rgba(0,0,0,0)",
-              width: "100%",
-              position: "absolute",
-            }}
-          ></img>
+
         </header>
         <Toaster></Toaster>
       </div>
