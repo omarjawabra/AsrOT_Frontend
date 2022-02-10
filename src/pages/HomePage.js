@@ -6,6 +6,7 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../user/User";
 import toast, { Toaster } from 'react-hot-toast';
 import AdminMail from "../components/AdminMail";
+import { isAuth ,unAuth} from "../user/User";
 
 function HomePage() {
   const history = useHistory();
@@ -21,7 +22,17 @@ function HomePage() {
     }*/
   };
 
+
+  const logout = () => {
+    unAuth();
+    history.push("login");
+  };
     const uploadNewTaskClicked = async () => {
+
+      if (isAuth()) {
+        history.push("create");
+      } else logout();
+
     /*setLoading(true);
     let response = await login(email, password);
     setLoading(false);
