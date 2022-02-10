@@ -4,13 +4,11 @@ import {  useHistory } from "react-router-dom";
 import AdminMail from "../components/AdminMail";
 import { isAuth ,unAuth} from "../user/User";
 
-function HomePage() {
+function DataSelectionPage() {
   const history = useHistory();
-
+  
   const myDataClicked = async () => {
-    if (isAuth()) {
-      history.push("/selectdata");
-    } else logout();
+
   };
 
 
@@ -20,9 +18,9 @@ function HomePage() {
   };
     const uploadNewTaskClicked = async () => {
 
-      if (isAuth()) {
+      /*if (isAuth()) {
         history.push("create");
-      } else logout();
+      } else logout();*/
   };
 
 
@@ -54,7 +52,7 @@ function HomePage() {
               color: "white",
             }}
           >
-            My Data
+            Assigned Tasks
           </button>
           <div style={{ height: 100 }}></div>
           <button
@@ -68,7 +66,7 @@ function HomePage() {
               color: "white",
             }}
           >
-            Upload New Task
+            My Tasks
           </button>
           <div style={{ height: 10 }}></div>
         </div>
@@ -89,4 +87,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default DataSelectionPage;

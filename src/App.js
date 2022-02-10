@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage"
 import TasksList from "./pages/TasksList"
 import CreateTask from "./pages/CreateTask"
 import HomePage from "./pages/HomePage"
+import DataSelectionPage from "./pages/DataSelectionPage";
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom' 
 
 function App() {
@@ -19,6 +20,9 @@ function App() {
           </Route>
           <Route exact path={"/"}>
              <HomePage></HomePage>
+          </Route>
+          <Route exact path={"/selectdata"}>
+             <DataSelectionPage></DataSelectionPage>
           </Route>
           <Route exact path={"/create"}>
              <CreateTask></CreateTask>
