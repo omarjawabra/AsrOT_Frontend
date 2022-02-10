@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage"
 import RegisterPage from "./pages/RegisterPage"
 import TasksList from "./pages/TasksList"
 import CreateTask from "./pages/CreateTask"
+import HomePage from "./pages/HomePage"
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom' 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
              <RegisterPage></RegisterPage>
           </Route>
           <Route exact path={"/"}>
-             <TasksList></TasksList>
+             <HomePage></HomePage>
           </Route>
           <Route exact path={"/create"}>
              <CreateTask></CreateTask>
