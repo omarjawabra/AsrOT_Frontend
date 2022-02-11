@@ -27,6 +27,9 @@ function App() {
           <Route exact path={"/create"}>
              <CreateTask></CreateTask>
           </Route>
+          <Route exact path={"/list"}>
+             <TasksList></TasksList>
+          </Route>
         </Switch>
     </Router>
   );

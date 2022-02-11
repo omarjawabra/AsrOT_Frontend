@@ -3,7 +3,8 @@ import React from "react";
 import {  useHistory } from "react-router-dom";
 import AdminMail from "../components/AdminMail";
 import { isAuth ,unAuth} from "../user/User";
-
+import LogoutButton from "../components/LogoutButton";
+import Username from "../components/Username";
 function HomePage() {
   const history = useHistory();
 
@@ -30,6 +31,8 @@ function HomePage() {
     <div className="App">
       <header className="App-header">
         <AdminMail></AdminMail>
+        <Username></Username>
+        <LogoutButton></LogoutButton>
         <h1 style={{ color: "#ffffff", fontSize: 75 }}>
           Automatic Transcriber
         </h1>

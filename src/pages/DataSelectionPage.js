@@ -3,12 +3,16 @@ import React from "react";
 import {  useHistory } from "react-router-dom";
 import AdminMail from "../components/AdminMail";
 import { isAuth ,unAuth} from "../user/User";
-
+import LogoutButton from "../components/LogoutButton";
+import Username from "../components/Username";
+import BackButton from "../components/BackButton";
 function DataSelectionPage() {
   const history = useHistory();
   
-  const myDataClicked = async () => {
-
+  const assignedTasksClicked = async () => {
+    if (isAuth()) {
+      history.push("list");
+    } else logout();
   };
 
 
@@ -27,7 +31,10 @@ function DataSelectionPage() {
   return (
     <div className="App">
       <header className="App-header">
+      <LogoutButton></LogoutButton>
         <AdminMail></AdminMail>
+        <Username></Username>
+        <BackButton></BackButton>
         <h1 style={{ color: "#ffffff", fontSize: 75 }}>
           Automatic Transcriber
         </h1>
@@ -42,7 +49,7 @@ function DataSelectionPage() {
          
 
           <button
-            onClick={myDataClicked}
+            onClick={assignedTasksClicked}
             style={{
               backgroundColor: "#20DF7F",
               width: "100%",
