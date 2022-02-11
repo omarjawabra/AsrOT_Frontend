@@ -7,7 +7,7 @@ import { getToken, isAuth, unAuth } from "../user/User";
 import getTaskList from "../api/GetTaskList";
 import LogoutButton from "../components/LogoutButton";
 import AdminMail from "../components/AdminMail";
-
+import BackButton from "../components/BackButton";
 
 const options = ["one", "two", "three"];
 const defaultOption = options[0];
@@ -68,7 +68,7 @@ function TasksList() {
           <LogoutButton></LogoutButton>
           <AdminMail></AdminMail>
           <Username></Username>
-          
+          <BackButton></BackButton>
 
           <h1 style={{ color: "#ffffff", fontSize: 75 }}>
             Automatic Transcriber
@@ -81,31 +81,14 @@ function TasksList() {
               width: "50%",
             }}
           >
-            <div style={{ flexDirection: "row", display: "flex" }}>
-              <button
-                onClick={createTask}
-                style={{
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 10,
-                  backgroundColor: "#20DF7F",
-                  width: "100%",
-                  height: 35,
-                  borderRadius: 7,
-                  marginTop: 10,
-                  color: "white",
-                  fontWeight: "bold",
-                }}
-              >
-                Create Task
-              </button>
-            </div>
+            
 
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
               Your Tasks
             </p>
             {tasks.slice(0).reverse().map((e,i) => {
-              return <TaskRow key={i} task={e}></TaskRow>;
+              if(e.status=='done')
+                return <TaskRow key={i} task={e}></TaskRow>;
             })}
           </div>
         </header>
