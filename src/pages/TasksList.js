@@ -9,34 +9,21 @@ import LogoutButton from "../components/LogoutButton";
 import AdminMail from "../components/AdminMail";
 import BackButton from "../components/BackButton";
 
-const options = ["one", "two", "three"];
-const defaultOption = options[0];
 var intervalId;
 
 function TasksList() {
   const history = useHistory();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
-  
-  const logout = () => {
-    unAuth();
-    clearInterval(intervalId);
-    intervalId=null;
-    history.push("login");
-  };
 
-  const createTask = () => {
-    clearInterval(intervalId);
-    intervalId=null;
-    if (isAuth()) {
-      history.push("create");
-    } else logout();
-  };
-
+  /**
+   * get the task list if logged in, otherwise logs out
+   */
   const getTasks = async () => {
     let token = getToken();
     if (token) {
       let tasks = await getTaskList(token);
+      console.log(tasks);
       if (tasks) {
         tasks = tasks.tasks;
         setTasks(tasks);
@@ -44,20 +31,21 @@ function TasksList() {
     } else {
       unAuth();
       clearInterval(intervalId);
-      intervalId=null;
+      intervalId = null;
       history.push("login");
     }
   };
 
+  
   useEffect(() => {
     if (!loading) {
-      setLoading(true)
-      if(!intervalId)
-      {
+      getTasks();
+      setLoading(true);
+      if (!intervalId) {
+        //calls getTasks every 30 secs
         intervalId = setInterval(getTasks, 30000);
-        getTasks();
-        setLoading(false)
       }
+      setLoading(false);
     }
   }, []);
 
@@ -81,15 +69,16 @@ function TasksList() {
               width: "50%",
             }}
           >
-            
-
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
               Your Tasks
             </p>
-            {tasks.slice(0).reverse().map((e,i) => {
-              if(e.status=='done'||e.status=='failed')
-                return <TaskRow key={i} task={e}></TaskRow>;
-            })}
+            {tasks
+              .slice(0)
+              .reverse()
+              .map((e, i) => {
+                if (e.status == "done" || e.status == "failed")
+                  return <TaskRow key={i} task={e}></TaskRow>;
+              })}
           </div>
         </header>
       </div>
