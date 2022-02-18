@@ -8,6 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import getVttFile from "../api/GetVttFile";
+import getMediaFile from "../api/GetMediaFile";
 function TaskRow(props) {
   const [progressValue, setProgressValue] = useState(0);
 
@@ -21,12 +22,17 @@ function TaskRow(props) {
     //navigator.clipboard.writeText(props.task.task_id);
     //toast.success("Task id copied to clipboard", { position: "bottom-center" });
   };
-
+const shareLinkClicked = () => {
+  navigator.clipboard.writeText('https://transcriptions.dataforlearningmachines.com/shared?task_id='+props.task.task_id);
+  toast.success("Link copied to clipboard", { position: "bottom-center" });
+    //navigator.clipboard.writeText(props.task.task_id);
+    //toast.success("Task id copied to clipboard", { position: "bottom-center" });
+  };
   const downloadTextFile = async () => {
     //navigator.clipboard.writeText(props.task.task_id);
     // toast.success("Task id copied to clipboard", { position: "bottom-center" });
     let token = getToken();
-    let text = await getTextFile(token, props.task.task_id);
+    let text = await getTextFile(props.task.task_id);
     if (text) {
       const element = document.createElement("a");
       const file = new Blob([text], { type: "text/plain" });
@@ -44,11 +50,34 @@ function TaskRow(props) {
     }
   };
 
+
+const downloadMediaFile = async () => {
+  getMediaFile( props.task.task_id,props.task.task_name);
+  //navigator.clipboard.writeText(props.task.task_id);
+  // toast.success("Task id copied to clipboard", { position: "bottom-center" });
+  /*let token = getToken();
+  let text = await getVttFile(token, props.task.task_id);
+  if (text) {
+    const element = document.createElement("a");
+    const file = new Blob([text], { type: "text/plain" });
+    element.href = URL.createObjectURL(file);
+    element.download = props.task.task_id+".vtt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+    toast.success("Vtt downloaded successfully", {
+      position: "bottom-center",
+    });
+  } else {
+    toast.error("Vtt could not be downloaded", {
+      position: "bottom-center",
+    });
+  }*/
+};
   const downloadVTTFile = async () => {
     //navigator.clipboard.writeText(props.task.task_id);
     // toast.success("Task id copied to clipboard", { position: "bottom-center" });
     let token = getToken();
-    let text = await getVttFile(token, props.task.task_id);
+    let text = await getVttFile(props.task.task_id);
     if (text) {
       const element = document.createElement("a");
       const file = new Blob([text], { type: "text/plain" });
@@ -80,7 +109,7 @@ function TaskRow(props) {
   const Status = (task) => {
     let status = task.status.status;
     if (status == "done") {
-      return (
+      return null /*(
         <AiOutlineCheckCircle
           style={{
             flex: 1,
@@ -90,10 +119,18 @@ function TaskRow(props) {
             alignSelf: "center",
           }}
         ></AiOutlineCheckCircle>
-      );
+      );*/
     } else {
       if (status == "failed")
         return (
+          <div
+          style={{
+            flex: 1,
+            fontSize: 25,
+            
+            alignSelf: "center",
+          }}
+          >
           <AiOutlineCloseCircle
             style={{
               flex: 1,
@@ -103,6 +140,7 @@ function TaskRow(props) {
               alignSelf: "center",
             }}
           ></AiOutlineCloseCircle>
+          </div>
         );
       else {
         calculateProgress(task.status.date_time, task.status.file_size);
@@ -194,6 +232,13 @@ function TaskRow(props) {
           correct
         </button>
         <div style={{ width: 5 }}></div>
+        <button
+          onClick={shareLinkClicked}
+          style={{ width: 120, fontSize: 15, alignSelf: "center" }}
+        >
+          share link
+        </button>
+        <div style={{ width: 5 }}></div>
         <div>
         </div>
         <button
@@ -205,13 +250,14 @@ function TaskRow(props) {
         <Menu {...bindMenu(popupState)}>
         <MenuItem onClick={downloadVTTFile}>VTT File</MenuItem>
         <MenuItem onClick={downloadTextFile}>Text File</MenuItem>
+        <MenuItem onClick={downloadMediaFile}>Media File</MenuItem>
       </Menu>
       </React.Fragment>
       )}
     </PopupState>
       </div>
       :
-       props.task.status == "failed"?<div style={{ display: "flex", flex: 1.1, flexDirection: "row" }}></div>:<div></div>
+       props.task.status == "failed"?<div></div>:<div></div>
       }
       <Toaster></Toaster>
     </div>

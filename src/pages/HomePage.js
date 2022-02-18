@@ -5,12 +5,13 @@ import AdminMail from "../components/AdminMail";
 import { isAuth ,unAuth} from "../user/User";
 import LogoutButton from "../components/LogoutButton";
 import Username from "../components/Username";
+import { Redirect } from "react-router-dom";
 function HomePage() {
   const history = useHistory();
 
   const myDataClicked = async () => {
     if (isAuth()) {
-      history.push("/selectdata");
+      history.push("/list");
     } else logout();
   };
 
@@ -26,7 +27,7 @@ function HomePage() {
       } else logout();
   };
 
-
+  if (isAuth()) {
   return (
     <div className="App">
       <header className="App-header">
@@ -71,7 +72,7 @@ function HomePage() {
               color: "white",
             }}
           >
-            Upload New Task
+            Upload New Media
           </button>
           <div style={{ height: 10 }}></div>
         </div>
@@ -89,7 +90,10 @@ function HomePage() {
         ></img>
       </header>
     </div>
-  );
+    )
+    } else {
+      return <Redirect to="login"></Redirect>;
+    }
 }
 
 export default HomePage;

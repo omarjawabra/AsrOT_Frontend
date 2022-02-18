@@ -4,16 +4,14 @@
  * @param {the task_id of the file} task_id 
  * @returns the text if succeeded, otherwise false
  */
-export default async function getTextFile(token, task_id) {
+export default async function getTextFile(task_id) {
   let response;
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Token " + token);
 
   var formdata = new FormData();
   formdata.append("taskId", task_id);
   var requestOptions = {
     method: "POST",
-    headers: myHeaders,
     redirect: "follow",
     body: formdata,
   };

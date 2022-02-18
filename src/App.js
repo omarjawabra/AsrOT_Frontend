@@ -6,6 +6,7 @@ import TasksList from "./pages/TasksList"
 import CreateTask from "./pages/CreateTask"
 import HomePage from "./pages/HomePage"
 import DataSelectionPage from "./pages/DataSelectionPage";
+import SharedFilesPage from "./pages/SharedFilesPage";
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom' 
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route exact path={"/list"}>
              <TasksList></TasksList>
+          </Route>
+          <Route exact path={"/shared"}>
+             <SharedFilesPage></SharedFilesPage>
           </Route>
         </Switch>
     </Router>

@@ -87,7 +87,7 @@ function TasksList() {
               Your Tasks
             </p>
             {tasks.slice(0).reverse().map((e,i) => {
-              if(e.status=='done')
+              if(e.status=='done'||e.status=='failed')
                 return <TaskRow key={i} task={e}></TaskRow>;
             })}
           </div>

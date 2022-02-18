@@ -20,11 +20,11 @@ function DataSelectionPage() {
     unAuth();
     history.push("login");
   };
-    const uploadNewTaskClicked = async () => {
+    const myTasksClicked = async () => {
 
-      /*if (isAuth()) {
-        history.push("create");
-      } else logout();*/
+      if (isAuth()) {
+        history.push("list");
+      } else logout();
   };
 
 
@@ -48,7 +48,7 @@ function DataSelectionPage() {
         >
          
 
-          <button
+         {/* <button
             onClick={assignedTasksClicked}
             style={{
               backgroundColor: "#20DF7F",
@@ -61,9 +61,9 @@ function DataSelectionPage() {
           >
             Assigned Tasks
           </button>
-          <div style={{ height: 100 }}></div>
+          <div style={{ height: 100 }}></div>*/}
           <button
-            onClick={uploadNewTaskClicked}
+            onClick={myTasksClicked}
             style={{
               backgroundColor: "#20DF7F",
               width: "100%",

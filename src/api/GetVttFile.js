@@ -5,16 +5,13 @@
  * @returns the vtt text if succeeded, otherwise false
  */
 
-export default async function getVttFile(token, id) {
+export default async function getVttFile(id) {
   let response;
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", "Token " + token);
   var formdata = new FormData();
   formdata.append("taskId", id);
 
   var requestOptions = {
     method: "POST",
-    headers: myHeaders,
     body: formdata,
     redirect: "follow",
   };
