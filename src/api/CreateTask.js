@@ -1,3 +1,9 @@
+import { MOCK_BACKEND, SERVER_URL } from "../constants";
+
+function mockCreateTask(token, file, taskName, sourceLanguage) {
+  return {"taskId": "51c77e4f-4222-4e59-95f4-139f25c57e8d"};
+}
+
 /**
  * 
  * @param {the token of the logged in user} token 
@@ -13,6 +19,9 @@ export default async function createTask(
   taskName,
   sourceLanguage
 ) {
+  if (MOCK_BACKEND) {
+    return mockCreateTask(token, file, taskName, sourceLanguage);
+  }
   let response;
   var myHeaders = new Headers();
   myHeaders.append("Authorization", "Token " + token);
@@ -30,7 +39,7 @@ export default async function createTask(
   };
 
   response = await fetch(
-    "https://i13hpc29.ira.uka.de:443/v1/createtask/",
+    SERVER_URL + "/v1/createtask/",
     requestOptions
   );
 

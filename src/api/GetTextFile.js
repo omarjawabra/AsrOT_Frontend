@@ -1,3 +1,9 @@
+import { MOCK_BACKEND, SERVER_URL } from "../constants";
+
+function mockGetTextFile(task_id) {
+  return "this is the first sentence\n\nthis is the second one\n\nand here is the third one";
+}
+
 /**
  * 
  * @param {the token of the logged in user} token 
@@ -5,6 +11,9 @@
  * @returns the text if succeeded, otherwise false
  */
 export default async function getTextFile(task_id) {
+  if (MOCK_BACKEND) {
+    return mockGetTextFile(task_id);
+  }
   let response;
   var myHeaders = new Headers();
 
@@ -16,7 +25,7 @@ export default async function getTextFile(task_id) {
     body: formdata,
   };
   response = await fetch(
-    "https://i13hpc29.ira.uka.de:443/v1/gettext/",
+    SERVER_URL + "/v1/gettext/",
     requestOptions
   );
   if (response.status == 200) {

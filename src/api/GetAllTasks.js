@@ -1,7 +1,7 @@
 import { MOCK_BACKEND, SERVER_URL } from "../constants";
 
-function mockGetTaskList(token) {
-  return {"tasks": [
+function mockGetAllTasks(token) {
+  return {"results": [
     {
       "audio_filename": "3sentences-2022_03_14_09_11_30",
       "data_path": "/project/asr_systems/LT2022/data/EN/datoid",
@@ -11,6 +11,7 @@ function mockGetTaskList(token) {
       "status": "done",
       "task_id": "344c770c-c12c-4075-903d-7d0547b3b45d",
       "task_name": "3sentences.wav",
+      "owner": "admin@asrot.de"
     },
     {
       "audio_filename": "4sentences-2022_03_16_15_23_11",
@@ -21,43 +22,22 @@ function mockGetTaskList(token) {
       "status": "done",
       "task_id": "51c77e4f-4222-4e59-95f4-139f25c57e8d",
       "task_name": "4sentences.wav",
+      "owner": "max@asrot.de"
     }
   ],
-  "assignedTasks": [
-    {
-      "audio_filename": "5sentences-2022_03_14_09_11_30",
-      "data_path": "/project/asr_systems/LT2022/data/EN/datoid",
-      "date_time": "2022-03-14T09:11:30Z",
-      "file_size": 3046552,
-      "language": "en",
-      "status": "done",
-      "task_id": "344c770c-c12c-4075-903d-7d0547b3b45d",
-      "task_name": "5sentences.wav",
-    },
-    {
-      "audio_filename": "6sentences-2022_03_16_15_23_11",
-      "data_path": "/project/asr_systems/LT2022/data/EN/datoid",
-      "date_time": "2022-03-16T15:23:11Z",
-      "file_size": 3046552,
-      "language": "en",
-      "status": "done",
-      "task_id": "51c77e4f-4222-4e59-95f4-139f25c57e8d",
-      "task_name": "6sentences.wav",
-    }
-  ]};
+    "count": 2,
+    "next": null,
+    "previous": null};
+
 }
 
 
 
-/**
- * get tasks api
- * returns an array of the tasks if succeeded
- * otherwise false
- */
+
  export default async function getTaskList(token)
  {
      if (MOCK_BACKEND) {
-       return mockGetTaskList(token);
+       return mockGetAllTasks(token);
      }
      let response;
      var myHeaders = new Headers();
@@ -69,6 +49,10 @@ function mockGetTaskList(token) {
        headers: myHeaders,
        redirect: 'follow'
      };  
+
+     // TODO add query params:
+    // page, items_per_page
+
      response = await fetch(SERVER_URL + "/v1/gettasks/", requestOptions);
      
      if(response.status==200)
