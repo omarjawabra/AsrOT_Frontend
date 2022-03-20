@@ -2,12 +2,27 @@ import "../App.css";
 import React from "react";
 import {  useHistory } from "react-router-dom";
 import AdminMail from "../components/AdminMail";
-import { isAuth ,unAuth} from "../user/User";
+import { isAuth ,unAuth, getToken} from "../user/User";
 import LogoutButton from "../components/LogoutButton";
 import Username from "../components/Username";
 import { Redirect } from "react-router-dom";
+import getUserInfo from "../api/GetUserInfo";
+import {useState, useEffect} from "react";
+
 function HomePage() {
   const history = useHistory();
+  let [canMakeAssignments, setCanMakeAssignments] = useState(false);
+
+  useEffect(() => {
+    async function getCanMakeAssignments(token) {
+      const userObj = await getUserInfo(token);
+      return userObj.canMakeAssignments;
+    }
+    const token = getToken();
+    getCanMakeAssignments(token).then((cma) => {
+      setCanMakeAssignments(cma);
+    });
+  });
 
   const myDataClicked = async () => {
     if (isAuth()) {
@@ -26,6 +41,10 @@ function HomePage() {
         history.push("create");
       } else logout();
   };
+
+  const handleAssignments = () => {
+    history.push("/assign");
+  }
 
   if (isAuth()) {
   return (
@@ -60,7 +79,7 @@ function HomePage() {
           >
             My Data
           </button>
-          <div style={{ height: 100 }}></div>
+          <div style={{ height: 10 }}></div>
           <button
             onClick={uploadNewTaskClicked}
             style={{
@@ -74,7 +93,19 @@ function HomePage() {
           >
             Upload New Media
           </button>
-          <div style={{ height: 10 }}></div>
+            { canMakeAssignments && (<><div style={{ height: 10 }}></div><button
+            onClick={handleAssignments}
+            style={{
+              backgroundColor: "#20DF7F",
+              width: "100%",
+              height: 35,
+              borderRadius: 7,
+              marginTop: 10,
+              color: "white",
+            }}
+          >
+            Assign tasks
+          </button><div style={{ height: 10 }}></div></>)}
         </div>
 
         
