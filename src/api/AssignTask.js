@@ -33,6 +33,6 @@ export default async function assignTask(
     requestOptions
   );
 
-  if (response.status == 200) return response.json();
+  if (response.status === 201) return response.json();
   return false;
 }

@@ -27,7 +27,7 @@ function mockRegister(email, password) {
      
      response = await fetch(SERVER_URL + "/auth/register/", requestOptions);
  
-     if(response.status==201)
+     if(response.status === 201)
          return true
      return false;
      

@@ -71,7 +71,7 @@ function mockGetTaskList(token) {
      };  
      response = await fetch(SERVER_URL + "/v1/gettasks/", requestOptions);
      
-     if(response.status==200)
+     if(response.status === 200)
          return response.json()
      return false;
      

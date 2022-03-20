@@ -43,6 +43,6 @@ export default async function createTask(
     requestOptions
   );
 
-  if (response.status == 200) return response.json();
+  if (response.status === 200) return response.json();
   return false;
 }

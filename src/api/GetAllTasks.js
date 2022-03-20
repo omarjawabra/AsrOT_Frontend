@@ -11,7 +11,7 @@ function mockGetAllTasks(token) {
       "status": "done",
       "task_id": "344c770c-c12c-4075-903d-7d0547b3b45d",
       "task_name": "3sentences.wav",
-      "owner": "admin@asrot.de"
+      "user": "admin@asrot.de"
     },
     {
       "audio_filename": "4sentences-2022_03_16_15_23_11",
@@ -22,7 +22,7 @@ function mockGetAllTasks(token) {
       "status": "done",
       "task_id": "51c77e4f-4222-4e59-95f4-139f25c57e8d",
       "task_name": "4sentences.wav",
-      "owner": "max@asrot.de"
+      "user": "max@asrot.de"
     }
   ],
     "count": 2,
@@ -55,7 +55,7 @@ function mockGetAllTasks(token) {
 
      response = await fetch(SERVER_URL + "/v1/gettasks/", requestOptions);
      
-     if(response.status==200)
+     if(response.status === 200)
          return response.json()
      return false;
      

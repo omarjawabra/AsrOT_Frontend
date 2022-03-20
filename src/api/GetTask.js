@@ -33,7 +33,7 @@ function mockGetTask(task_id) {
      };  
      response = await fetch(SERVER_URL + "/v1/gettask/?taskId="+task_id, requestOptions);
      
-     if(response.status==200)
+     if(response.status === 200)
          return response.json()
      return false;
      

@@ -15,7 +15,6 @@ export default async function getTextFile(task_id) {
     return mockGetTextFile(task_id);
   }
   let response;
-  var myHeaders = new Headers();
 
   var formdata = new FormData();
   formdata.append("taskId", task_id);
@@ -28,7 +27,7 @@ export default async function getTextFile(task_id) {
     SERVER_URL + "/v1/gettext/",
     requestOptions
   );
-  if (response.status == 200) {
+  if (response.status === 200) {
     let text = await response.json();
     if (text.text) return text.text;
     else return false;

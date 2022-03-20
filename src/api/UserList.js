@@ -27,7 +27,7 @@ function mockGetUserList(token) {
      
      response = await fetch(SERVER_URL + "/auth/listusers/", requestOptions)
      
-     if(response.status==200)
+     if(response.status === 200)
          return response.json()
      return false;
      

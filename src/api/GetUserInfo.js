@@ -29,7 +29,7 @@ function mockGetUserInfo(token) {
      
      response = await fetch(SERVER_URL + "/auth/userinfo/", requestOptions)
      
-     if(response.status==200)
+     if(response.status === 200)
          return response.json()
      return false;
      
