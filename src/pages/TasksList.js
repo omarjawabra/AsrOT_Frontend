@@ -14,6 +14,7 @@ var intervalId;
 function TasksList() {
   const history = useHistory();
   const [tasks, setTasks] = useState([]);
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [loading, setLoading] = useState(false);
 
   /**
@@ -25,8 +26,10 @@ function TasksList() {
       let tasks = await getTaskList(token);
       console.log(tasks);
       if (tasks) {
-        tasks = tasks.tasks;
-        setTasks(tasks);
+        const myTasks = tasks.tasks;
+        setTasks(myTasks);
+        const assignedTasks = tasks.assignedTasks;
+        setAssignedTasks(assignedTasks);
       }
     } else {
       unAuth();
@@ -73,6 +76,25 @@ function TasksList() {
               Your Tasks
             </p>
             {tasks
+              .slice(0)
+              .reverse()
+              .map((e, i) => {
+                if (e.status == "done" || e.status == "failed")
+                  return <TaskRow key={i} task={e}></TaskRow>;
+              })}
+          </div>
+          <div
+            style={{
+              backgroundColor: "rgba(255,255,255,0.05)",
+              padding: 20,
+              borderRadius: 10,
+              width: "50%",
+            }}
+          >
+            <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
+              Assigned Tasks
+            </p>
+            {assignedTasks
               .slice(0)
               .reverse()
               .map((e, i) => {
