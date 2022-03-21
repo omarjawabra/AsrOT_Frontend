@@ -1,10 +1,10 @@
-import "./AssignModalStyle.css";
+import "../css/AssignModalStyle.css";
 import React, { useEffect, useState } from "react";
 import getUserList from "../api/UserList";
 import { getToken } from "../user/User";
 
 function AssignModal(props) {
-    const showHideClassName = props.show ? 'modal display-block' : 'modal display-none';
+    const showHideClassName = props.show ? '' : 'hidden'
     let [users, setUsers] = useState([]);
     useEffect(() => {
         if (!props.show) return;
@@ -17,25 +17,28 @@ function AssignModal(props) {
         });
     });
     return (
-        <div className={showHideClassName}>
-            <section className='modal-main'>
+        <div className={`modal ${showHideClassName}`}>
+            <div className='modal-main'>
+                <button className="close" onClick={props.handleClose}>&#10006;</button>
+                <h3>User List</h3>
                 {props.children}
-                {users.map((user) => {
-                    return (<div>
-                        <span>{user.email}</span>
-                        <button onClick={() => {
-                            props.handleAssign(user.email);
-                        }}>
-                            Assign
-                        </button>    
-                    </div>)
-                })}
-                <button
-                    onClick={props.handleClose}
-                >
-                    Close
-                </button>
-            </section>
+                <table id="user-list">
+                    <tbody>
+                        {users.map((user, i) => {
+                            return (<tr key={i}>
+                                <td>{user.email}</td>
+                                <td>
+                                    <button onClick={() => {
+                                        props.handleAssign(user.email);
+                                    }}>
+                                        Assign
+                                    </button>
+                                </td>
+                            </tr>)
+                        })}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

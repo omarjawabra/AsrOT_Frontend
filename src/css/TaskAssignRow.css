@@ -1,0 +1,15 @@
+
+.task-assign-row {
+    background-color: rgba(128, 128, 128, 0.25);
+}
+
+.task-assign-row td {
+    padding: 10px;
+    text-align: left;
+}
+
+.task-assign-row button {
+    width: 120px;
+    font-size: 15px;
+    float: right;
+}

@@ -1,16 +1,10 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import {Link} from "react-router-dom";
 export default function BackButton()
 {
-    const history = useHistory();
-
-    const back = () => {
-        history.goBack()
-      };
-
     return(
+        <Link to="/">
         <button
-            onClick={back}
             style={{
               position: "absolute",
               top: "10%",
@@ -27,5 +21,6 @@ export default function BackButton()
           >
             Back
           </button>
+          </Link>
     );
 }

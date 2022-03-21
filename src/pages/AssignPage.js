@@ -1,4 +1,5 @@
 import "../App.css";
+import "../css/AssignPage.css";
 import TaskAssignRow from "../components/TaskAssignRow";
 import Username from "../components/Username";
 import React, { useEffect, useState } from "react";
@@ -67,33 +68,25 @@ function AssignPage() {
           <AdminMail></AdminMail>
           <Username></Username>
           <BackButton></BackButton>
-
-          <h1 style={{ color: "#ffffff", fontSize: 75 }}>
-            Automatic Transcriber
-          </h1>
-          <div
-            style={{
-              backgroundColor: "rgba(255,255,255,0.05)",
-              padding: 20,
-              borderRadius: 10,
-              width: "50%",
-            }}
-          >
-            <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
-              All Tasks
-            </p>
-            <AssignModal show={showAssignModal} handleClose={hideModal} handleAssign={assign}>
-              <p>User List</p>
-            </AssignModal>
-            {tasks
-              .slice(0)
-              .reverse()
-              .map((e, i) => {
-                if (e.status == "done" || e.status == "failed")
-                  return <TaskAssignRow key={i} task={e} openModal={showModal}></TaskAssignRow>;
-              })}
-          </div>
+          <h1>Automatic Transcriber</h1>
         </header>
+        <main>
+          <div className="Content-box">
+            <h2>All Tasks</h2>
+            <AssignModal show={showAssignModal} handleClose={hideModal} handleAssign={assign}></AssignModal>
+            <table id="tasks-list">
+              <tbody>
+                {tasks
+                  .slice(0)
+                  .reverse()
+                  .map((e, i) => {
+                    if (e.status == "done" || e.status == "failed")
+                      return <TaskAssignRow key={i} task={e} openModal={showModal}></TaskAssignRow>;
+                  })}
+              </tbody>
+            </table>
+          </div>
+        </main>
       </div>
     );
   } else {
