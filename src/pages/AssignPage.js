@@ -8,7 +8,7 @@ import getTaskList from "../api/GetAllTasks";
 import LogoutButton from "../components/LogoutButton";
 import AdminMail from "../components/AdminMail";
 import BackButton from "../components/BackButton";
-
+import AssignModal from "../components/AssignModal";
 
 function AssignPage() {
   const history = useHistory();
@@ -16,6 +16,24 @@ function AssignPage() {
   const [nextPage, setNextPage] = useState(null);
   const [prevPage, setPrevPage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showAssignModal, setShowAssignModal] = useState(false);
+  const [taskSelected, setTaskSelected] = useState(null);
+
+  const showModal = (taskID) => {
+    setTaskSelected(taskID);
+    setShowAssignModal(true);
+  }
+
+  const hideModal = () => {
+    setTaskSelected(null);
+    setShowAssignModal(false);
+  }
+
+  const assign = (userEmail) => {
+    console.log("Assigning task");
+    console.log("userEmail: " + userEmail);
+    console.log("taskID: "+ taskSelected);
+  }
 
   /**
    * get the task list if logged in, otherwise logs out
@@ -37,7 +55,6 @@ function AssignPage() {
     }
   };
 
-  
   useEffect(() => {
     getTasksAndMetaInfo();
   }, []);
@@ -65,12 +82,15 @@ function AssignPage() {
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
               All Tasks
             </p>
+            <AssignModal show={showAssignModal} handleClose={hideModal} handleAssign={assign}>
+              <p>User List</p>
+            </AssignModal>
             {tasks
               .slice(0)
               .reverse()
               .map((e, i) => {
                 if (e.status == "done" || e.status == "failed")
-                  return <TaskAssignRow key={i} task={e}></TaskAssignRow>;
+                  return <TaskAssignRow key={i} task={e} openModal={showModal}></TaskAssignRow>;
               })}
           </div>
         </header>
