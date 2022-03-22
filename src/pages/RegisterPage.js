@@ -6,6 +6,7 @@ import register from "../api/Register";
 import pdf from "../files/agreement.pdf";
 import toast, { Toaster } from "react-hot-toast";
 import AdminMail from "../components/AdminMail";
+import ToggleButton from "../components/ToggleButton";
 function RegisterPage() {
   const history = useHistory();
 
@@ -115,6 +116,17 @@ function RegisterPage() {
             }}
             placeholder=" Repeat Password"
           ></input>
+
+
+          <div style={{ display: "flex", flexDirection: "row" }}>
+
+          <ToggleButton language={"German"}></ToggleButton>
+          <ToggleButton language={"Arabic"}></ToggleButton>
+          <ToggleButton language={"English"}></ToggleButton>
+          </div>
+
+            
+
           <div style={{ display: "flex", flexDirection: "row" }}>
             <input
               name="isGoing"
