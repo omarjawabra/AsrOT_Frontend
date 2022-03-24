@@ -117,14 +117,19 @@ function RegisterPage() {
             placeholder=" Repeat Password"
           ></input>
 
-
+         {/* <div style={{ display: "flex", flexDirection: "row" }}> 
+            <p style={{ fontSize: 20, alignSelf: "center",margin:0,marginLeft:5,marginTop:5 }}>
+              {" "}
+              Select your languages: {" "}
+            </p>
+            </div>
           <div style={{ display: "flex", flexDirection: "row" }}>
 
           <ToggleButton language={"German"}></ToggleButton>
           <ToggleButton language={"Arabic"}></ToggleButton>
           <ToggleButton language={"English"}></ToggleButton>
           </div>
-
+ */}
             
 
           <div style={{ display: "flex", flexDirection: "row" }}>

@@ -225,12 +225,12 @@ const downloadMediaFile = async () => {
          <PopupState variant="popover" popupId="demo-popup-menu">
       {(popupState) => (
         <React.Fragment>
-         <button
+         {/*<button
           onClick={correctTaskId}
           style={{ width: 120, fontSize: 15, alignSelf: "center" }}
         >
           correct
-        </button>
+      </button>*/}
         <div style={{ width: 5 }}></div>
         <button
           onClick={shareLinkClicked}
@@ -246,7 +246,7 @@ const downloadMediaFile = async () => {
           {...bindTrigger(popupState)}
         >
           download
-        </button>
+    </button>
         <Menu {...bindMenu(popupState)}>
         <MenuItem onClick={downloadVTTFile}>VTT File</MenuItem>
         <MenuItem onClick={downloadTextFile}>Text File</MenuItem>

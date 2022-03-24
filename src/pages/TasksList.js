@@ -28,8 +28,8 @@ function TasksList() {
       if (tasks) {
         const myTasks = tasks.tasks;
         setTasks(myTasks);
-        const assignedTasks = tasks.assignedTasks;
-        setAssignedTasks(assignedTasks);
+        //const assignedTasks = tasks.assignedTasks;
+        //setAssignedTasks(assignedTasks);
       }
     } else {
       unAuth();
@@ -73,7 +73,7 @@ function TasksList() {
             }}
           >
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold" }}>
-              Your Tasks
+              Your Media
             </p>
             {tasks
               .slice(0)
@@ -83,7 +83,7 @@ function TasksList() {
                   return <TaskRow key={i} task={e}></TaskRow>;
               })}
           </div>
-          <div
+          {/*<div
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
               padding: 20,
@@ -101,7 +101,7 @@ function TasksList() {
                 if (e.status == "done" || e.status == "failed")
                   return <TaskRow key={i} task={e}></TaskRow>;
               })}
-          </div>
+            </div>*/}
         </header>
       </div>
     );

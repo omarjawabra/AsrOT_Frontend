@@ -117,7 +117,10 @@ function CreateTask() {
     let response = await createTask(token, inputFile, title, selectedOption);
     setLoading(false);
     if(response)
+    {
       toast.success("Task uploaded successfully", { position: "bottom-center" });
+      history.goBack()
+    }
     else
       toast.error("A problem occurred while uploading the task", { position: "bottom-center" });
   };
@@ -162,8 +165,7 @@ function CreateTask() {
               </button>
             </div>
             <div style={{ height: 25 }}></div>
-            
-            <input
+            {title==""?null:<input
               onChange={(e) => {
                 //setTitle(e.target.value);
               }}
@@ -179,9 +181,11 @@ function CreateTask() {
               value={title}
               placeholder={'File Name'}
               readOnly={true}
-            ></input>
+            ></input>}
+            
             <div style={{ height: 25 }}></div>
             <Select
+              
               styles={customStyles}
               defaultValue={selectedOption}
               onChange={(e) => setSelectedOption(e.value)}
@@ -199,12 +203,12 @@ function CreateTask() {
                 color: "white",
               }}
             >
-              Submit Task
+              Submit
             </button>
             <div style={{height:10}}></div>
             <ClipLoader color={"#ffffff"} loading={loading} size={40} />
           </div>
-          <div style={{height:50}}></div>
+          {/*<div style={{height:50}}></div>
           <div
             style={{
               backgroundColor: "rgba(255,255,255,0.05)",
@@ -225,7 +229,7 @@ function CreateTask() {
                 return <TaskRow key={i} task={e}></TaskRow>;
             })}
           </div>
-          <div style={{ height: 10 }}></div>
+          <div style={{ height: 10 }}></div>*/}
 
 
         </header>
