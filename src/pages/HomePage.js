@@ -10,7 +10,8 @@ import getUserInfo from "../api/GetUserInfo";
 import TaskRow from "../components/TaskRow";
 import {useState, useEffect} from "react";
 import getTaskList from "../api/GetTaskList";
-
+import getCSV from "../api/GetCSV";
+import toast, { Toaster } from "react-hot-toast";
 var intervalId;
 function HomePage() {
   const history = useHistory();
@@ -157,8 +158,22 @@ function HomePage() {
           >
             <div style={{display:'flex',flexDirection:'row'}}>
             <div style={{flex:1}}>
-            <button >
-              button
+            <button onClick={ async ()  =>  {
+              let text = await getCSV()
+              if (text) {
+                const element = document.createElement("a");
+                const file = new Blob([text], { type: "text/plain" });
+                element.href = URL.createObjectURL(file);
+                element.download = "YourLinks.csv";
+                document.body.appendChild(element); // Required for this to work in FireFox
+                element.click();
+              } else {
+                toast.error("links file could not be downloaded", {
+                  position: "bottom-center",
+                });
+              }
+            }}>
+              Get all Links
             </button>
             </div>
             <p style={{ fontSize: 30, margin: 0, fontWeight: "bold",flex:1 }}>
@@ -186,7 +201,9 @@ function HomePage() {
             position: "absolute",
           }}
         ></img>*/}
+        <Toaster></Toaster>
       </header>
+
     </div>
     )
     } else {
