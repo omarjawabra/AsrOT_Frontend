@@ -145,7 +145,7 @@ const downloadMediaFile = async () => {
       else {
         calculateProgress(task.status.date_time, task.status.file_size);
         return (
-          <div style={{ flex: 2 ,flexDirection: "row",
+          <div style={{ flex: 1 ,flexDirection: "row",
           display: "flex"}}>
             <p
               style={{
@@ -161,18 +161,17 @@ const downloadMediaFile = async () => {
             <div
               style={{
                 flex: 1,
-                flexDirection: "row",
-                display: "flex",
+                fontSize: 15,
                 alignSelf: "center",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+                }}
             >
-              <progress
+              It might take a while
+              {/*<progress
                 max="100"
                 value={progressValue}
                 style={{ width: 75, margin: 0, padding: 0 }}
               ></progress>
+              
               <div style={{width:2}}></div>
               <p
                 style={{
@@ -183,7 +182,7 @@ const downloadMediaFile = async () => {
                 }}
               >
                 {progressValue}%
-              </p>
+              </p>*/}
             </div>
           </div>
         );
